@@ -24,6 +24,10 @@
 		555D1628166E73B900CC23C2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 555D1600166E73B900CC23C2 /* Foundation.framework */; };
 		555D1630166E73B900CC23C2 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 555D162E166E73B900CC23C2 /* InfoPlist.strings */; };
 		555D1633166E73B900CC23C2 /* RAW_ImporterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 555D1632166E73B900CC23C2 /* RAW_ImporterTests.m */; };
+		555D163D166E767000CC23C2 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 555D163C166E767000CC23C2 /* AssetsLibrary.framework */; };
+		555D1641166E80E300CC23C2 /* PA090004.ORF in Resources */ = {isa = PBXBuildFile; fileRef = 555D163E166E80E300CC23C2 /* PA090004.ORF */; };
+		555D1642166E80E300CC23C2 /* PA090008.ORF in Resources */ = {isa = PBXBuildFile; fileRef = 555D163F166E80E300CC23C2 /* PA090008.ORF */; };
+		555D1643166E80E300CC23C2 /* PA090010.ORF in Resources */ = {isa = PBXBuildFile; fileRef = 555D1640166E80E300CC23C2 /* PA090010.ORF */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +64,10 @@
 		555D162F166E73B900CC23C2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		555D1631166E73B900CC23C2 /* RAW_ImporterTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RAW_ImporterTests.h; sourceTree = "<group>"; };
 		555D1632166E73B900CC23C2 /* RAW_ImporterTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RAW_ImporterTests.m; sourceTree = "<group>"; };
+		555D163C166E767000CC23C2 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
+		555D163E166E80E300CC23C2 /* PA090004.ORF */ = {isa = PBXFileReference; lastKnownFileType = file; name = PA090004.ORF; path = RAWs/PA090004.ORF; sourceTree = "<group>"; };
+		555D163F166E80E300CC23C2 /* PA090008.ORF */ = {isa = PBXFileReference; lastKnownFileType = file; name = PA090008.ORF; path = RAWs/PA090008.ORF; sourceTree = "<group>"; };
+		555D1640166E80E300CC23C2 /* PA090010.ORF */ = {isa = PBXFileReference; lastKnownFileType = file; name = PA090010.ORF; path = RAWs/PA090010.ORF; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +75,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				555D163D166E767000CC23C2 /* AssetsLibrary.framework in Frameworks */,
 				555D15FF166E73B900CC23C2 /* UIKit.framework in Frameworks */,
 				555D1601166E73B900CC23C2 /* Foundation.framework in Frameworks */,
 				555D1603166E73B900CC23C2 /* CoreGraphics.framework in Frameworks */,
@@ -108,6 +117,7 @@
 		555D15FD166E73B900CC23C2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				555D163C166E767000CC23C2 /* AssetsLibrary.framework */,
 				555D15FE166E73B900CC23C2 /* UIKit.framework */,
 				555D1600166E73B900CC23C2 /* Foundation.framework */,
 				555D1602166E73B900CC23C2 /* CoreGraphics.framework */,
@@ -140,6 +150,9 @@
 				555D1610166E73B900CC23C2 /* Default.png */,
 				555D1612166E73B900CC23C2 /* Default@2x.png */,
 				555D1614166E73B900CC23C2 /* Default-568h@2x.png */,
+				555D163E166E80E300CC23C2 /* PA090004.ORF */,
+				555D163F166E80E300CC23C2 /* PA090008.ORF */,
+				555D1640166E80E300CC23C2 /* PA090010.ORF */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -240,6 +253,9 @@
 				555D1615166E73B900CC23C2 /* Default-568h@2x.png in Resources */,
 				555D161B166E73B900CC23C2 /* ViewController_iPhone.xib in Resources */,
 				555D161E166E73B900CC23C2 /* ViewController_iPad.xib in Resources */,
+				555D1641166E80E300CC23C2 /* PA090004.ORF in Resources */,
+				555D1642166E80E300CC23C2 /* PA090008.ORF in Resources */,
+				555D1643166E80E300CC23C2 /* PA090010.ORF in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

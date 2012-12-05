@@ -9,8 +9,22 @@
 #import "AppDelegate.h"
 
 #import "ViewController.h"
+#import <AssetsLibrary/AssetsLibrary.h>
+
+
+static int s_filesImported = 0;
+
+@interface AppDelegate (private)
+
+//@property (nonatomic) int filesImported;
+
+- (void) incrementImported;
+
+@end
+
 
 @implementation AppDelegate
+
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -23,7 +37,44 @@
     }
     self.window.rootViewController = self.viewController;
     [self.window makeKeyAndVisible];
+    
+    //  import RAW files in the main bundle
+    self.assetLibrary = [[ALAssetsLibrary alloc] init];
+    
+    dispatch_queue_t queue = dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0 );
+    
+    //  send the RAW import to GCD for asynchronous processing
+    dispatch_async( queue, ^{
+        NSArray *   files = [[NSBundle mainBundle] pathsForResourcesOfType:@"ORF" inDirectory:nil];
+        
+        for ( NSString * path in files )
+        {
+            //  Read the file into memory using NSData
+            NSData *    data = [NSData dataWithContentsOfFile:path];
+            
+            if ( data != nil )
+            {
+                [self.assetLibrary writeImageDataToSavedPhotosAlbum:data metadata:nil completionBlock: ^(NSURL * assetUrl, NSError * err ){
+                    if ( err == nil )
+                        [self incrementImported];
+                    else
+                        NSLog( @"%@", [err localizedDescription] );
+                }];
+            }
+        }
+    });
+    
     return YES;
+}
+
+- (void) incrementImported
+{
+    @synchronized( self )
+    {
+//        self.filesImported = self.filesImported + 1;
+        s_filesImported++;
+        self.viewController.fileNumLabel.text = [NSString stringWithFormat:@"%d", s_filesImported];
+    }
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
