@@ -12,6 +12,9 @@
 @class ALAssetsLibrary;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
+{
+    NSMutableArray *   _fileList;
+}
 
 @property (strong, nonatomic) UIWindow *window;
 

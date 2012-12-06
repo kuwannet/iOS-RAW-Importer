@@ -11,6 +11,7 @@
 #import "ViewController.h"
 #import <AssetsLibrary/AssetsLibrary.h>
 
+#define _IN_FLIGHT_ 4
 
 static int s_filesImported = 0;
 
@@ -19,6 +20,7 @@ static int s_filesImported = 0;
 //@property (nonatomic) int filesImported;
 
 - (void) incrementImported;
+- (void) importNextFile;
 
 @end
 
@@ -41,40 +43,44 @@ static int s_filesImported = 0;
     //  import RAW files in the main bundle
     self.assetLibrary = [[ALAssetsLibrary alloc] init];
     
-    dispatch_queue_t queue = dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0 );
+    _fileList = [NSMutableArray arrayWithArray: [[NSBundle mainBundle] pathsForResourcesOfType:nil inDirectory:@"images"]];
     
-    //  send the RAW import to GCD for asynchronous processing
-    dispatch_async( queue, ^{
-        NSArray *   files = [[NSBundle mainBundle] pathsForResourcesOfType:@"ORF" inDirectory:nil];
-        
-        for ( NSString * path in files )
-        {
-            //  Read the file into memory using NSData
-            NSData *    data = [NSData dataWithContentsOfFile:path];
-            
-            if ( data != nil )
-            {
-                [self.assetLibrary writeImageDataToSavedPhotosAlbum:data metadata:nil completionBlock: ^(NSURL * assetUrl, NSError * err ){
-                    if ( err == nil )
-                        [self incrementImported];
-                    else
-                        NSLog( @"%@", [err localizedDescription] );
-                }];
-            }
-        }
-    });
+    //  begin importing files, each call to importNextFile is asynchronous and will call importNextFile
+    //  after each import completes
+    for ( int i = 0; i < _IN_FLIGHT_; i++ )
+    {
+        [self importNextFile];
+    }
+    
+    
+//    dispatch_queue_t queue = dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0 );
+//    
+//    //  send the RAW import to GCD for asynchronous processing
+//    dispatch_async( queue, ^{
+//        NSArray *   files = [[NSBundle mainBundle] pathsForResourcesOfType:nil inDirectory:@"images"];
+//        
+//        for ( NSString * path in files )
+//        {
+//            //  Read the file into memory using NSData
+//            NSData *    data = [NSData dataWithContentsOfFile:path];
+//            
+//            if ( data != nil )
+//            {
+//                [self.assetLibrary writeImageDataToSavedPhotosAlbum:data metadata:nil completionBlock: ^(NSURL * assetUrl, NSError * err ){
+//                    if ( err == nil )
+//                        [self incrementImported];
+//                    else
+//                    {
+//                        NSLog( @"Error! %@", [err localizedDescription] );
+//                        NSLog( @"\tSuggestion: %@", [err localizedRecoverySuggestion] );
+//                        NSLog( @"\tUser Info: %@", [[err userInfo] description] );
+//                    }
+//                }];
+//            }
+//        }
+//    });
     
     return YES;
-}
-
-- (void) incrementImported
-{
-    @synchronized( self )
-    {
-//        self.filesImported = self.filesImported + 1;
-        s_filesImported++;
-        self.viewController.fileNumLabel.text = [NSString stringWithFormat:@"%d", s_filesImported];
-    }
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
@@ -102,6 +108,55 @@ static int s_filesImported = 0;
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+@end
+
+@implementation AppDelegate (private)
+
+- (void) importNextFile
+{
+    @synchronized( self )
+    {
+        if ( [_fileList count] > 0 )
+        {
+            NSString * path = _fileList[0];
+            
+            //  remove the file from the list
+            [_fileList removeObjectAtIndex:0];
+            
+            //  Read the file into memory using NSData
+            NSData *    data = [NSData dataWithContentsOfFile:path];
+            
+            if ( data != nil )
+            {
+                //  write it to the asset library
+                [self.assetLibrary writeImageDataToSavedPhotosAlbum:data metadata:nil completionBlock: ^(NSURL * assetUrl, NSError * err ){
+                    if ( err == nil )
+                    {
+                        [self incrementImported];
+                        [self importNextFile];
+                    }
+                    else
+                    {
+                        NSLog( @"Error! %@", [err localizedDescription] );
+                        NSLog( @"\tSuggestion: %@", [err localizedRecoverySuggestion] );
+                        NSLog( @"\tUser Info: %@", [[err userInfo] description] );
+                    }
+                }];
+            }
+        }
+    }
+}
+
+- (void) incrementImported
+{
+    @synchronized( self )
+    {
+        //        self.filesImported = self.filesImported + 1;
+        s_filesImported++;
+        self.viewController.fileNumLabel.text = [NSString stringWithFormat:@"%d", s_filesImported];
+    }
 }
 
 @end
