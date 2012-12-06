@@ -52,34 +52,6 @@ static int s_filesImported = 0;
         [self importNextFile];
     }
     
-    
-//    dispatch_queue_t queue = dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0 );
-//    
-//    //  send the RAW import to GCD for asynchronous processing
-//    dispatch_async( queue, ^{
-//        NSArray *   files = [[NSBundle mainBundle] pathsForResourcesOfType:nil inDirectory:@"images"];
-//        
-//        for ( NSString * path in files )
-//        {
-//            //  Read the file into memory using NSData
-//            NSData *    data = [NSData dataWithContentsOfFile:path];
-//            
-//            if ( data != nil )
-//            {
-//                [self.assetLibrary writeImageDataToSavedPhotosAlbum:data metadata:nil completionBlock: ^(NSURL * assetUrl, NSError * err ){
-//                    if ( err == nil )
-//                        [self incrementImported];
-//                    else
-//                    {
-//                        NSLog( @"Error! %@", [err localizedDescription] );
-//                        NSLog( @"\tSuggestion: %@", [err localizedRecoverySuggestion] );
-//                        NSLog( @"\tUser Info: %@", [[err userInfo] description] );
-//                    }
-//                }];
-//            }
-//        }
-//    });
-    
     return YES;
 }
 
