@@ -17,8 +17,6 @@ static int s_filesImported = 0;
 
 @interface AppDelegate (private)
 
-//@property (nonatomic) int filesImported;
-
 - (void) incrementImported;
 - (void) importNextFile;
 
@@ -45,8 +43,10 @@ static int s_filesImported = 0;
     
     _fileList = [NSMutableArray arrayWithArray: [[NSBundle mainBundle] pathsForResourcesOfType:nil inDirectory:@"images"]];
     
-    //  begin importing files, each call to importNextFile is asynchronous and will call importNextFile
-    //  after each import completes
+    //  Begin importing files, each call to importNextFile is asynchronous and will call importNextFile
+    //  after each import completes. I limit the number that we do at a time because otherwise there
+    //  will be "write busy" errors where the images don't get written because the Asset Library
+    //  is busy.
     for ( int i = 0; i < _IN_FLIGHT_; i++ )
     {
         [self importNextFile];
@@ -106,6 +106,7 @@ static int s_filesImported = 0;
                 [self.assetLibrary writeImageDataToSavedPhotosAlbum:data metadata:nil completionBlock: ^(NSURL * assetUrl, NSError * err ){
                     if ( err == nil )
                     {
+                        //  We've completed with success, increment the #imported and import the next file in the list.
                         [self incrementImported];
                         [self importNextFile];
                     }
