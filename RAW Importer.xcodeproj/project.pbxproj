@@ -26,6 +26,8 @@
 		555D1633166E73B900CC23C2 /* RAW_ImporterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 555D1632166E73B900CC23C2 /* RAW_ImporterTests.m */; };
 		555D163D166E767000CC23C2 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 555D163C166E767000CC23C2 /* AssetsLibrary.framework */; };
 		557A7906166FC6B000AB518F /* images in Resources */ = {isa = PBXBuildFile; fileRef = 557A7905166FC6B000AB518F /* images */; };
+		557A790B1672A77F00AB518F /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 557A790A1672A77F00AB518F /* ImageIO.framework */; };
+		557A790D1672AE0F00AB518F /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 557A790C1672AE0F00AB518F /* MobileCoreServices.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,6 +66,8 @@
 		555D1632166E73B900CC23C2 /* RAW_ImporterTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RAW_ImporterTests.m; sourceTree = "<group>"; };
 		555D163C166E767000CC23C2 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		557A7905166FC6B000AB518F /* images */ = {isa = PBXFileReference; lastKnownFileType = folder; path = images; sourceTree = "<group>"; };
+		557A790A1672A77F00AB518F /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
+		557A790C1672AE0F00AB518F /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +75,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				557A790D1672AE0F00AB518F /* MobileCoreServices.framework in Frameworks */,
+				557A790B1672A77F00AB518F /* ImageIO.framework in Frameworks */,
 				555D163D166E767000CC23C2 /* AssetsLibrary.framework in Frameworks */,
 				555D15FF166E73B900CC23C2 /* UIKit.framework in Frameworks */,
 				555D1601166E73B900CC23C2 /* Foundation.framework in Frameworks */,
@@ -115,10 +121,12 @@
 			isa = PBXGroup;
 			children = (
 				555D163C166E767000CC23C2 /* AssetsLibrary.framework */,
-				555D15FE166E73B900CC23C2 /* UIKit.framework */,
-				555D1600166E73B900CC23C2 /* Foundation.framework */,
 				555D1602166E73B900CC23C2 /* CoreGraphics.framework */,
+				555D1600166E73B900CC23C2 /* Foundation.framework */,
+				557A790A1672A77F00AB518F /* ImageIO.framework */,
+				557A790C1672AE0F00AB518F /* MobileCoreServices.framework */,
 				555D1625166E73B900CC23C2 /* SenTestingKit.framework */,
+				555D15FE166E73B900CC23C2 /* UIKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";

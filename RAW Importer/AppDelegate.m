@@ -10,6 +10,8 @@
 
 #import "ViewController.h"
 #import <AssetsLibrary/AssetsLibrary.h>
+#import <ImageIO/ImageIO.h>
+#import <MobileCoreServices/MobileCoreServices.h>
 
 #define _IN_FLIGHT_ 4
 
@@ -41,7 +43,21 @@ static int s_filesImported = 0;
     //  import RAW files in the main bundle
     self.assetLibrary = [[ALAssetsLibrary alloc] init];
     
-    _fileList = [NSMutableArray arrayWithArray: [[NSBundle mainBundle] pathsForResourcesOfType:nil inDirectory:@"images"]];
+    
+    NSArray * sourceTypes = CFBridgingRelease(CGImageSourceCopyTypeIdentifiers());
+    NSArray * files = [[NSBundle mainBundle] pathsForResourcesOfType:nil inDirectory:@"images"];
+    
+    _fileList = [NSMutableArray array];
+    
+    //  iterate over the file list and add images to _fileList for importing
+    for ( NSString * path in files )
+    {
+        NSString * fileUTI = CFBridgingRelease( UTTypeCreatePreferredIdentifierForTag( kUTTagClassFilenameExtension, (__bridge CFStringRef)( [path pathExtension] ), NULL ) );
+
+        //  only add supported file types
+        if ( [sourceTypes containsObject:fileUTI] )
+            [_fileList addObject:path];
+    }
     
     //  Begin importing files, each call to importNextFile is asynchronous and will call importNextFile
     //  after each import completes. I limit the number that we do at a time because otherwise there

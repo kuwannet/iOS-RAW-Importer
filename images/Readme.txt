@@ -1,0 +1,1 @@
+All images in this folder of any type supported by the Asset Library will be imported.
